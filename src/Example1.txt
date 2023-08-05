@@ -1,0 +1,41 @@
+7
+q0 q1 q2 p0 p1 r t
+2
+a b
+28
+q0 > + q0
+q0 < - p0
+q0 a + q1
+q0 b + q0
+q1 > + r
+q1 < - r
+q1 a + q2
+q1 b + q1
+q2 > + r
+q2 < - r
+q2 a + q0
+q2 b + q2
+p0 > + t
+p0 < - r
+p0 a - p0
+p0 b - p1
+p1 > + r
+p1 < - r
+p1 a - p1
+p1 b - p0
+r > + r
+r < + r
+r a + r
+r b + r
+t > + t
+t < + t
+t a + t
+t b + t
+q0
+1
+t
+aaabb
+T
+abb
+T
+bbbaa

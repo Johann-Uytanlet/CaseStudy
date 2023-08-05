@@ -1,0 +1,22 @@
+2
+A B
+2
+q r
+8
+A q + A
+A r + B
+A > + A
+A < + A
+B q + A
+B r + B
+B > + B
+B < + B
+A
+1
+B
+qr
+T
+qrq
+T
+qrqrqrqrqrqrqrqr
+F
