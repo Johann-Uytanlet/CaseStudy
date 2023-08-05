@@ -10,8 +10,6 @@ import java.util.Scanner;
 import java.util.Set;
 
 public class TwoWayAccepter extends JFrame{
-    private JTextField inputField;
-    private JButton submitButton;
     private JTextArea outputArea, transitionsArea, givenStringArea;
     private Set<String> stateSet = new HashSet<>();
     private Set<String> inputSet = new HashSet<>();
@@ -34,7 +32,6 @@ public class TwoWayAccepter extends JFrame{
         JPanel inputPanel = createInputPanel();
         JPanel transitionPanel = createTransitionPanel();
         JPanel outputPanel = createOutputPanel();
-
 
         add(inputPanel);
         add(transitionPanel);
@@ -132,12 +129,6 @@ public class TwoWayAccepter extends JFrame{
                             for(int i = 0; i<numTransitions; i++){
                                 String currTransition = scanner.nextLine();
                                 String[] currTransitionFormatted = currTransition.split("\\s+");
-            /*
-            System.out.println(currTransition);
-            System.out.println(currTransitionFormatted[0]);
-            System.out.println(currTransitionFormatted[1]);
-            System.out.println(currTransitionFormatted[2]);
-            System.out.println(currTransitionFormatted[3]);*/
                                 if(currTransitionFormatted.length != 4){
 
                                     outputArea.append("Error: Invalid transition format\n");
@@ -184,9 +175,6 @@ public class TwoWayAccepter extends JFrame{
                                         }
                                     }
                                 }
-            /*for(String seen : seenInputs) {
-                System.out.println(seen);
-            }*/
                                 if (!inputsSet.equals(seenInputs)) {
                                     outputArea.append("Not all transitions are defined for state " + state + "\n");
                                     isDFA = false;
@@ -253,19 +241,18 @@ public class TwoWayAccepter extends JFrame{
         });
         panel.add(fileInputButton);
 
-
         JButton submitButton = new JButton("Submit");
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String states = stateField.getText();
                 String inputs = inputField.getText();
-                String startStatefromField = startStateField.getText();
+                String startStateFromField = startStateField.getText();
                 String finalStates = finalStateField.getText();
 
                 if( states.isEmpty() ||
                         inputs.isEmpty() ||
-                        startStatefromField.isEmpty() ||
+                        startStateFromField.isEmpty() ||
                         finalStates.isEmpty()){
                     outputArea.append("Error: One or more of the entries is empty\n");
                 } else {
@@ -274,7 +261,6 @@ public class TwoWayAccepter extends JFrame{
                     startState = "";
                     endStateSet = new HashSet<>();
                     String errorMsg = "";
-
 
                     String[] stateNames = states.split("\\s+");
 
@@ -297,7 +283,7 @@ public class TwoWayAccepter extends JFrame{
                     inputSet.add(">");
                     inputSet.add("<");
 
-                    String[] startStateNames = startStatefromField.split("\\s+");
+                    String[] startStateNames = startStateFromField.split("\\s+");
                     startState = startStateNames[0];
 
                     if(!stateSet.contains(startState)){
@@ -314,13 +300,6 @@ public class TwoWayAccepter extends JFrame{
                         }
                     }
                     if(errorMsg.isEmpty()){
-                        /*
-                        String x = "";
-                        for(String state : stateSet){
-                            x += state + " ";
-                        outputArea.append(x + "\n");
-                        }*/
-
                         outputArea.append("OKAY with states\n");
                         transitionsArea.setText("");
                         givenStringArea.setText("");
@@ -331,11 +310,6 @@ public class TwoWayAccepter extends JFrame{
                         givenStringArea.setText("");
                         okayTransitions = false;
                     }
-                    /*
-                    outputArea.append("States: " + states + "\n");
-                    outputArea.append("Input: " + input + "\n");
-                    outputArea.append("Start States " + startState + "\n");
-                    outputArea.append("Final States: " + finalStates + "\n");*/
                 }
 
 
@@ -352,7 +326,7 @@ public class TwoWayAccepter extends JFrame{
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.insets = new Insets(5,0, 5, 0); // Padding for each component
 
-        // Part 1: Title Label
+        // title label
         JLabel titleLabel = new JLabel("Transition Input (startState, input, direction (+/-), endState)");
         titleLabel.setHorizontalAlignment(JLabel.CENTER); // Center the label horizontally
         constraints.gridx = 0;
@@ -367,7 +341,7 @@ public class TwoWayAccepter extends JFrame{
         constraints.gridy = 1;
         transitionPanel.add(title2Label, constraints);
 
-        // Part 2: Transitions Text Area
+        // transitions text area
         transitionsArea = new JTextArea();
         JScrollPane transitionsScrollPane = new JScrollPane(transitionsArea);
         transitionsArea.setRows(10); // Set the number of rows for the text area
@@ -377,7 +351,7 @@ public class TwoWayAccepter extends JFrame{
         constraints.weighty = 1.0; // Allow vertical expansion
         transitionPanel.add(transitionsScrollPane, constraints);
 
-        // Part 3: Given String Label
+        // given string label
         JLabel givenStringLabel = new JLabel("Given String:");
         constraints.gridy = 3;
         constraints.gridwidth = 1;
@@ -385,7 +359,7 @@ public class TwoWayAccepter extends JFrame{
         constraints.weighty = 0.0;
         transitionPanel.add(givenStringLabel, constraints);
 
-        // Part 4: Given String Text Area
+        // given string input area
         givenStringArea = new JTextArea();
         givenStringArea.setRows(3); // Set the number of rows for the text area
         givenStringArea.setPreferredSize(new Dimension(150, 60)); // Adjust dimensions as needed
@@ -394,7 +368,7 @@ public class TwoWayAccepter extends JFrame{
         constraints.fill = GridBagConstraints.HORIZONTAL;
         transitionPanel.add(givenStringArea, constraints);
 
-        // Part 5: Submit Button
+        // submit button
         JButton submitButton = new JButton("Submit");
         constraints.gridx = 0;
         constraints.gridy = 4;
@@ -440,7 +414,6 @@ public class TwoWayAccepter extends JFrame{
                     if(givenString.contains(">") || givenString.contains("<")){
                         ergMsg += "Do not enter end markers inside the given string\n";
                     }
-
                     if(ergMsg.isEmpty()){
                         outputArea.append("PROCESSING\n");
                         processString(transitionsSet,startState,endStateSet,givenString,outputArea);
@@ -450,7 +423,6 @@ public class TwoWayAccepter extends JFrame{
                 } else {
                     outputArea.append("The initial states are not okay yet\n");
                 }
-
             }
         });
         transitionPanel.add(submitButton, constraints);
@@ -461,27 +433,20 @@ public class TwoWayAccepter extends JFrame{
     private String isDFA(Set<transitions> transitionsSet, Set<String> stateSet, Set<String> inputSet){
         for (String state : stateSet) {
             Set<String> seenInputs = new HashSet<>();
-
             // check for transitions with curr state as start symbol
             for (transitions transition : transitionsSet) {
                 seenInputs.add(transition.getInput());
-
             }
             if (!inputSet.equals(seenInputs)) {
                 return "Not all transitions are defined for state " + state + "\n";
-
             }
         }
         return "";
-
     }
-
-
 
     private JPanel createOutputPanel() {
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
-
         outputArea = new JTextArea();
         outputArea.setEditable(false);
         panel.add(new JScrollPane(outputArea), BorderLayout.CENTER);
@@ -501,7 +466,6 @@ public class TwoWayAccepter extends JFrame{
     private static void processString(Set<transitions> transitionsSet, String startState,
                                       Set<String> endStateSet, String givenString, JTextArea outputArea) {
         String givenStringwEndMarkers = ">" + givenString + "<";
-
         String currState = startState;
         int index = 0;
 
@@ -509,7 +473,6 @@ public class TwoWayAccepter extends JFrame{
         while (index >= 0 && index < givenStringwEndMarkers.length()) {
             // Get current index
             String symbol = Character.toString(givenStringwEndMarkers.charAt(index));
-
             // Find the transition for curr state and index
             transitions matchedTransition = null;
             for (transitions transition : transitionsSet) {
@@ -519,7 +482,6 @@ public class TwoWayAccepter extends JFrame{
                     break;
                 }
             }
-
             // If valid transition
             if (matchedTransition != null) {
                 // Update current state
